@@ -13,5 +13,7 @@ namespace LibraryMS.Core.Entities
         public decimal Value { get; set; }
         public bool Resolved { get; set; }
         public DateTime Date { get; set; }
+        public int BorrowHistoryId { get; set; }
+        public BorrowHistory BorrowHistory { get; set; }
     }
 }
