@@ -2,6 +2,7 @@ using LibraryMS.Core.Entities;
 using LibraryMS.Core.Interfaces.Repositories;
 using LibraryMS.Repository.Data.DbContexts;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace LibraryMS.Application
@@ -16,6 +17,10 @@ namespace LibraryMS.Application
 			#region Application Services
 			// Add services to the container.
 			builder.Services.AddControllersWithViews();
+			services.AddDbContext<LibraryDbContext>(options =>
+			{
+				options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+			});
 			services.AddIdentity<ApplicationUser, IdentityRole>()
 					.AddEntityFrameworkStores<LibraryDbContext>()
 					.AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
