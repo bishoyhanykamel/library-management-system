@@ -1,5 +1,7 @@
 ﻿using LibraryMS.Core.Entities;
 using LibraryMS.Core.Interfaces.Repositories;
+using LibraryMS.Repository.Data.DbContexts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,29 +12,38 @@ namespace LibraryMS.Repository.Repositories
 {
 	public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
 	{
-		public Task<int> AddAsync(T item)
+		private readonly LibraryDbContext dbContext;
+
+		public GenericRepository(LibraryDbContext _dbContext)
+        {
+			dbContext = _dbContext;
+		}
+        public async Task<int> AddAsync(T item)
 		{
-			throw new NotImplementedException();
+			await dbContext.Set<T>().AddAsync(item);
+			return await dbContext.SaveChangesAsync();
 		}
 
-		public Task<int> DeleteAsync(T item)
+		public async Task<int> DeleteAsync(T item)
 		{
-			throw new NotImplementedException();
+			dbContext.Set<T>().Remove(item);
+			return await dbContext.SaveChangesAsync();
 		}
 
-		public Task<IEnumerable<T>> GetAllAsync()
+		public async Task<IEnumerable<T>> GetAllAsync()
 		{
-			throw new NotImplementedException();
+			return await dbContext.Set<T>().ToListAsync();
 		}
 
-		public Task<T> GetByIdAsync(int id)
+		public async Task<T> GetByIdAsync(int id)
 		{
-			throw new NotImplementedException();
+			return await dbContext.Set<T>().FindAsync(id);
 		}
 
-		public Task<int> UpdateAsync(T item)
+		public async Task<int> UpdateAsync(T item)
 		{
-			throw new NotImplementedException();
+			dbContext.Set<T>().Update(item);
+			return await dbContext.SaveChangesAsync();
 		}
 	}
 }
