@@ -1,3 +1,9 @@
+using LibraryMS.Core.Entities;
+using LibraryMS.Core.Interfaces.Repositories;
+using LibraryMS.Repository.Data.DbContexts;
+using Microsoft.AspNetCore.Identity;
+using System;
+
 namespace LibraryMS.Application
 {
 	public class Program
@@ -6,11 +12,13 @@ namespace LibraryMS.Application
 		{
 			var builder = WebApplication.CreateBuilder(args);
 
+			var services = builder.Services;
+			#region Application Services
 			// Add services to the container.
 			builder.Services.AddControllersWithViews();
-
-			#region Application Services
-
+			services.AddIdentity<ApplicationUser, IdentityRole>()
+					.AddEntityFrameworkStores<LibraryDbContext>()
+					.AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
 			#endregion
 
 			var app = builder.Build();
