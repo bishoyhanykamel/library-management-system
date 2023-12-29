@@ -12,8 +12,7 @@ namespace LibraryMS.Core.Entities
         public int BookId { get; set; }
         public Book Book { get; set; }
         public bool Status { get; set; }
-        
+        public string ReaderId { get; set; }
         public ReaderUser Reader { get; set; }
-        public LibraryUser LibraryUser { get; set; }
     }
 }

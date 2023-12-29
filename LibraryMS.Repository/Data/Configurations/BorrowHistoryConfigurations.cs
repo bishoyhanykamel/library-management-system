@@ -13,10 +13,7 @@ namespace LibraryMS.Repository.Data.Configurations
 	{
 		public void Configure(EntityTypeBuilder<BorrowHistory> builder)
 		{
-			builder.Property(h => h.BookId).IsRequired();
-			builder.Property(h => h.UserId).IsRequired();
-			//builder.HasOne(h => h.Book).WithMany().HasForeignKey(h => h.BookId);
-			//builder.HasOne(h => h.User).WithMany().HasForeignKey(h => h.UserId);
+
 		}
 	}
 }

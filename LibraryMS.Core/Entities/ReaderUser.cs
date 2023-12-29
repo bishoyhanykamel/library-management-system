@@ -13,5 +13,6 @@ namespace LibraryMS.Core.Entities
 		public BorrowRequest BorrowRequest { get; set; }
 		public ICollection<UserFine> Fines { get; set; }
 		public ICollection<BorrowHistory> BorrowHistory { get; set; }
+		public ICollection<Book> Books { get; set; }
 	}
 }

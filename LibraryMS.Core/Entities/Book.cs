@@ -14,7 +14,8 @@ namespace LibraryMS.Core.Entities
         public bool Available { get; set; }
         public int CategoryId { get; set; }
         public BookCategory Category { get; set; }
-        public int RequestId {  get; set; }
-        public BorrowRequest BorrowRequest { get; set; }
+        public ICollection<BorrowRequest> BorrowRequest { get; set; }
+        public ICollection<BorrowHistory> BorrowHistory { get; set; }
+        public ICollection<ReaderUser> ReaderUser { get; set; }
     }
 }

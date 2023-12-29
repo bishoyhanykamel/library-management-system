@@ -24,9 +24,9 @@ namespace LibraryMS.Application
 			});
 
 			// Adding Identity to Project
-			services.AddIdentity<LibraryUser, IdentityRole>()
+			services.AddIdentity<LibrarianUser, IdentityRole>()
 					.AddEntityFrameworkStores<LibraryDbContext>()
-					.AddTokenProvider<DataProtectorTokenProvider<LibraryUser>>(TokenOptions.DefaultProvider);
+					.AddTokenProvider<DataProtectorTokenProvider<LibrarianUser>>(TokenOptions.DefaultProvider);
 			services.AddIdentity<ReaderUser, IdentityRole>()
 					.AddEntityFrameworkStores<LibraryDbContext>()
 					.AddTokenProvider<DataProtectorTokenProvider<ReaderUser>>(TokenOptions.DefaultProvider);
