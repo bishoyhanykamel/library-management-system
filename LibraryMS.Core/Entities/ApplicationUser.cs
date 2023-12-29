@@ -9,6 +9,10 @@ namespace LibraryMS.Core.Entities
 {
 	public class ApplicationUser : IdentityUser
 	{
-
+        public int UserId { get; set; }
+        public ICollection<BorrowHistory> BorrowHistor { get; set; }
+		public ICollection<UserFine> Fines { get; set; }
+        public int RequestId { get; set; }
+        public BorrowRequest BorrowRequest { get; set; }
 	}
 }

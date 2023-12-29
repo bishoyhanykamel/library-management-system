@@ -12,6 +12,7 @@ namespace LibraryMS.Core.Entities
         public string Author { get; set; }
         public string Description { get; set; }
         public bool Available { get; set; }
-
+        public int CategoryId { get; set; }
+        public BookCategory Category { get; set; }
     }
 }
