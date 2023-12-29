@@ -9,7 +9,7 @@ namespace LibraryMS.Application
 {
 	public class Program
 	{
-		public static void Main(string[] args)
+		public static async void Main(string[] args)
 		{
 			var builder = WebApplication.CreateBuilder(args);
 
@@ -17,10 +17,13 @@ namespace LibraryMS.Application
 			#region Application Services
 			// Add services to the container.
 			builder.Services.AddControllersWithViews();
+			// Database connection
 			services.AddDbContext<LibraryDbContext>(options =>
 			{
 				options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 			});
+
+			// Adding Identity to Project
 			services.AddIdentity<ApplicationUser, IdentityRole>()
 					.AddEntityFrameworkStores<LibraryDbContext>()
 					.AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
@@ -44,6 +47,7 @@ namespace LibraryMS.Application
 			app.UseRouting();
 
 			app.UseAuthorization();
+			app.UseAuthentication();
 
 			app.MapControllerRoute(
 				name: "default",
