@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace LibraryMS.Repository.Data.Configurations
 {
-	public class ApplicationUserConfiguration : IEntityTypeConfiguration<ApplicationUser>
+	public class ReaderUserConfiguration : IEntityTypeConfiguration<ReaderUser>
 	{
-		public void Configure(EntityTypeBuilder<ApplicationUser> builder)
+		public void Configure(EntityTypeBuilder<ReaderUser> builder)
 		{
-			builder.Property(u => u.UserId).IsRequired().UseIdentityColumn();
+			builder.HasOne(u => u.BorrowRequest).WithMany().HasForeignKey(u => u.RequestId);
 		}
 	}
 }

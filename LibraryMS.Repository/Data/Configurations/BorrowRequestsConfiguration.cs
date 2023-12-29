@@ -14,8 +14,8 @@ namespace LibraryMS.Repository.Data.Configurations
 		public void Configure(EntityTypeBuilder<BorrowRequest> builder)
 		{
 			builder.Property(r => r.Status).IsRequired().HasDefaultValue(false);
-			builder.HasOne(r => r.User).WithMany().HasForeignKey(r => r.UserId).HasPrincipalKey(u => u.UserId);
-			builder.HasOne(r => r.Book).WithMany().HasForeignKey(r => r.BookId);
+			//builder.HasOne(r => r.User).WithMany().HasForeignKey(r => r.UserId).HasPrincipalKey(u => u.UserId);
+			//builder.HasOne(r => r.Book).WithMany().HasForeignKey(r => r.BookId);
 		}
 	}
 }

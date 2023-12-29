@@ -1,4 +1,5 @@
 ﻿using LibraryMS.Core.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace LibraryMS.Repository.Data.DbContexts
 {
-	public class LibraryDbContext : IdentityDbContext<ApplicationUser>
+	public class LibraryDbContext : IdentityDbContext<IdentityUser>
 	{
         public LibraryDbContext(DbContextOptions options) : base(options)
         {

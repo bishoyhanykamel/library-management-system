@@ -9,7 +9,7 @@ namespace LibraryMS.Application
 {
 	public class Program
 	{
-		public static void Main(string[] args)
+		public static async Task Main(string[] args)
 		{
 			var builder = WebApplication.CreateBuilder(args);
 
@@ -24,12 +24,37 @@ namespace LibraryMS.Application
 			});
 
 			// Adding Identity to Project
-			services.AddIdentity<ApplicationUser, IdentityRole>()
+			services.AddIdentity<LibraryUser, IdentityRole>()
 					.AddEntityFrameworkStores<LibraryDbContext>()
-					.AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
+					.AddTokenProvider<DataProtectorTokenProvider<LibraryUser>>(TokenOptions.DefaultProvider);
+			services.AddIdentity<ReaderUser, IdentityRole>()
+					.AddEntityFrameworkStores<LibraryDbContext>()
+					.AddTokenProvider<DataProtectorTokenProvider<ReaderUser>>(TokenOptions.DefaultProvider);
 			#endregion
 
 			var app = builder.Build();
+
+
+			#region Data Migration
+			// Migrate database
+			using var appScope = app.Services.CreateScope();
+			var appServices = appScope.ServiceProvider;
+			var loggerFactory = appServices.GetRequiredService<ILoggerFactory>();
+			try
+			{
+				var libraryDbContext = appServices.GetRequiredService<LibraryDbContext>();
+				await libraryDbContext.Database.MigrateAsync();
+
+				var roles = appServices.GetRequiredService<RoleManager<IdentityRole>>();
+				await LibraryContextSeed.CreateRoles(roles, loggerFactory);
+				// Seed user roles
+			}
+			catch (Exception ex)
+			{
+				var migrationLogger = loggerFactory.CreateLogger<Program>();
+				migrationLogger.LogError(string.Empty, $"Error in migration - Program.cs - {ex.Message}");
+			}
+			#endregion
 
 
 			#region Application Pipelines
