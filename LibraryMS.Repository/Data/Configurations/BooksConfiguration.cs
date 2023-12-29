@@ -13,10 +13,14 @@ namespace LibraryMS.Repository.Data.Configurations
 	{
 		public void Configure(EntityTypeBuilder<Book> builder)
 		{
-			builder.Property(b => b.Available).HasDefaultValue(true);
-			builder.Property(b => b.Name).IsRequired();
-			builder.Property(b => b.Description).IsRequired();
-			builder.Property(b => b.Author).IsRequired();
+			#region Rules
+			builder.Property(b => b.Name).IsRequired().HasMaxLength(100);
+			builder.Property(b => b.Description).IsRequired().HasMaxLength(512);
+			#endregion
+
+			#region Relations
+			builder.HasOne(b => b.Category).WithMany(c => c.Books).HasForeignKey(b => b.CategoryId); 
+			#endregion
 
 		}
 	}

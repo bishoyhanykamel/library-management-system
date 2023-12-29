@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace LibraryMS.Core.Entities
 {
-	public class LibrarianUser : IdentityUser
+	public class ApplicationUser : IdentityUser
 	{
-		public ICollection<LibrarianApproveRequest> ApproveRequests { get; set; }
+		public ICollection<BorrowRequest> Request { get; set; }
+		public ICollection<BorrowHistory> History { get; set; }
 	}
 }

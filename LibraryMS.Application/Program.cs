@@ -24,12 +24,12 @@ namespace LibraryMS.Application
 			});
 
 			// Adding Identity to Project
-			services.AddIdentity<LibrarianUser, IdentityRole>()
+			services.AddIdentity<ApplicationUser, IdentityRole>()
 					.AddEntityFrameworkStores<LibraryDbContext>()
-					.AddTokenProvider<DataProtectorTokenProvider<LibrarianUser>>(TokenOptions.DefaultProvider);
-			services.AddIdentity<ReaderUser, IdentityRole>()
-					.AddEntityFrameworkStores<LibraryDbContext>()
-					.AddTokenProvider<DataProtectorTokenProvider<ReaderUser>>(TokenOptions.DefaultProvider);
+					.AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
+			//services.AddIdentity<ApplicationUser, IdentityRole>()
+			//		.AddEntityFrameworkStores<LibraryDbContext>()
+			//		.AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
 			#endregion
 
 			var app = builder.Build();

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryMS.Repository.Data.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    [Migration("20231229162910_InitialCreate")]
+    [Migration("20231229223126_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,21 @@ namespace LibraryMS.Repository.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("ApplicationUserBorrowRequest", b =>
+                {
+                    b.Property<string>("ReaderId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("RequestId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ReaderId", "RequestId");
+
+                    b.HasIndex("RequestId");
+
+                    b.ToTable("ApplicationUserBorrowRequest");
+                });
 
             modelBuilder.Entity("LibraryMS.Core.Entities.Book", b =>
                 {
@@ -36,24 +51,18 @@ namespace LibraryMS.Repository.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Available")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
-
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RequestId")
-                        .HasColumnType("int");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -72,11 +81,13 @@ namespace LibraryMS.Repository.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -91,19 +102,39 @@ namespace LibraryMS.Repository.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("BookId1")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<byte>("DaysLeft")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint")
+                        .HasDefaultValue((byte)3);
+
                     b.Property<string>("ReaderId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<bool>("Returned")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.HasKey("Id");
 
+                    b.HasIndex("ApplicationUserId");
+
                     b.HasIndex("BookId");
+
+                    b.HasIndex("BookId1");
 
                     b.HasIndex("ReaderId");
 
@@ -118,19 +149,16 @@ namespace LibraryMS.Repository.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("AmountOfDays")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(3);
+
                     b.Property<int>("BookId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("LibrarianId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ReaderId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Status")
                         .ValueGeneratedOnAdd()
@@ -139,12 +167,28 @@ namespace LibraryMS.Repository.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BookId")
-                        .IsUnique();
-
-                    b.HasIndex("LibrarianId");
+                    b.HasIndex("BookId");
 
                     b.ToTable("BorrowRequests");
+                });
+
+            modelBuilder.Entity("LibraryMS.Core.Entities.LibrarianApproveRequest", b =>
+                {
+                    b.Property<string>("LibrarianId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("BorrowId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ApproveDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("LibrarianId", "BorrowId");
+
+                    b.HasIndex("BorrowId");
+
+                    b.ToTable("LibrarianApproveRequest");
                 });
 
             modelBuilder.Entity("LibraryMS.Core.Entities.UserFine", b =>
@@ -158,12 +202,11 @@ namespace LibraryMS.Repository.Data.Migrations
                     b.Property<int>("BorrowHistoryId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("BorrowHistoryId1")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("ReaderId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("Resolved")
                         .ValueGeneratedOnAdd()
@@ -178,7 +221,9 @@ namespace LibraryMS.Repository.Data.Migrations
                     b.HasIndex("BorrowHistoryId")
                         .IsUnique();
 
-                    b.HasIndex("ReaderId");
+                    b.HasIndex("BorrowHistoryId1")
+                        .IsUnique()
+                        .HasFilter("[BorrowHistoryId1] IS NOT NULL");
 
                     b.ToTable("UserFines");
                 });
@@ -387,6 +432,18 @@ namespace LibraryMS.Repository.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("LibraryMS.Core.Entities.ApplicationUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<int?>("BookId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("BookId");
+
+                    b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
             modelBuilder.Entity("LibraryMS.Core.Entities.LibrarianUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -394,18 +451,19 @@ namespace LibraryMS.Repository.Data.Migrations
                     b.HasDiscriminator().HasValue("LibrarianUser");
                 });
 
-            modelBuilder.Entity("LibraryMS.Core.Entities.ReaderUser", b =>
+            modelBuilder.Entity("ApplicationUserBorrowRequest", b =>
                 {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+                    b.HasOne("LibraryMS.Core.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("ReaderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<int>("RequestId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("RequestId")
-                        .IsUnique()
-                        .HasFilter("[RequestId] IS NOT NULL");
-
-                    b.HasDiscriminator().HasValue("ReaderUser");
+                    b.HasOne("LibraryMS.Core.Entities.BorrowRequest", null)
+                        .WithMany()
+                        .HasForeignKey("RequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LibraryMS.Core.Entities.Book", b =>
@@ -421,14 +479,22 @@ namespace LibraryMS.Repository.Data.Migrations
 
             modelBuilder.Entity("LibraryMS.Core.Entities.BorrowHistory", b =>
                 {
+                    b.HasOne("LibraryMS.Core.Entities.ApplicationUser", null)
+                        .WithMany("History")
+                        .HasForeignKey("ApplicationUserId");
+
                     b.HasOne("LibraryMS.Core.Entities.Book", "Book")
                         .WithMany()
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LibraryMS.Core.Entities.ReaderUser", "Reader")
+                    b.HasOne("LibraryMS.Core.Entities.Book", null)
                         .WithMany("BorrowHistory")
+                        .HasForeignKey("BookId1");
+
+                    b.HasOne("LibraryMS.Core.Entities.ApplicationUser", "Reader")
+                        .WithMany()
                         .HasForeignKey("ReaderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -441,18 +507,29 @@ namespace LibraryMS.Repository.Data.Migrations
             modelBuilder.Entity("LibraryMS.Core.Entities.BorrowRequest", b =>
                 {
                     b.HasOne("LibraryMS.Core.Entities.Book", "Book")
-                        .WithOne("BorrowRequest")
-                        .HasForeignKey("LibraryMS.Core.Entities.BorrowRequest", "BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LibraryMS.Core.Entities.LibrarianUser", "Librarian")
                         .WithMany("BorrowRequest")
-                        .HasForeignKey("LibrarianId")
+                        .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Book");
+                });
+
+            modelBuilder.Entity("LibraryMS.Core.Entities.LibrarianApproveRequest", b =>
+                {
+                    b.HasOne("LibraryMS.Core.Entities.BorrowRequest", "Borrow")
+                        .WithMany("RequestsApprove")
+                        .HasForeignKey("BorrowId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LibraryMS.Core.Entities.LibrarianUser", "Librarian")
+                        .WithMany("ApproveRequests")
+                        .HasForeignKey("LibrarianId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Borrow");
 
                     b.Navigation("Librarian");
                 });
@@ -462,18 +539,14 @@ namespace LibraryMS.Repository.Data.Migrations
                     b.HasOne("LibraryMS.Core.Entities.BorrowHistory", "BorrowHistory")
                         .WithOne()
                         .HasForeignKey("LibraryMS.Core.Entities.UserFine", "BorrowHistoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("LibraryMS.Core.Entities.ReaderUser", "Reader")
-                        .WithMany("Fines")
-                        .HasForeignKey("ReaderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("BorrowHistory");
+                    b.HasOne("LibraryMS.Core.Entities.BorrowHistory", null)
+                        .WithOne("Fine")
+                        .HasForeignKey("LibraryMS.Core.Entities.UserFine", "BorrowHistoryId1");
 
-                    b.Navigation("Reader");
+                    b.Navigation("BorrowHistory");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -527,21 +600,20 @@ namespace LibraryMS.Repository.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("LibraryMS.Core.Entities.ReaderUser", b =>
+            modelBuilder.Entity("LibraryMS.Core.Entities.ApplicationUser", b =>
                 {
-                    b.HasOne("LibraryMS.Core.Entities.BorrowRequest", "BorrowRequest")
-                        .WithOne("Reader")
-                        .HasForeignKey("LibraryMS.Core.Entities.ReaderUser", "RequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("BorrowRequest");
+                    b.HasOne("LibraryMS.Core.Entities.Book", null)
+                        .WithMany("ReaderUser")
+                        .HasForeignKey("BookId");
                 });
 
             modelBuilder.Entity("LibraryMS.Core.Entities.Book", b =>
                 {
-                    b.Navigation("BorrowRequest")
-                        .IsRequired();
+                    b.Navigation("BorrowHistory");
+
+                    b.Navigation("BorrowRequest");
+
+                    b.Navigation("ReaderUser");
                 });
 
             modelBuilder.Entity("LibraryMS.Core.Entities.BookCategory", b =>
@@ -549,22 +621,25 @@ namespace LibraryMS.Repository.Data.Migrations
                     b.Navigation("Books");
                 });
 
+            modelBuilder.Entity("LibraryMS.Core.Entities.BorrowHistory", b =>
+                {
+                    b.Navigation("Fine")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("LibraryMS.Core.Entities.BorrowRequest", b =>
                 {
-                    b.Navigation("Reader")
-                        .IsRequired();
+                    b.Navigation("RequestsApprove");
+                });
+
+            modelBuilder.Entity("LibraryMS.Core.Entities.ApplicationUser", b =>
+                {
+                    b.Navigation("History");
                 });
 
             modelBuilder.Entity("LibraryMS.Core.Entities.LibrarianUser", b =>
                 {
-                    b.Navigation("BorrowRequest");
-                });
-
-            modelBuilder.Entity("LibraryMS.Core.Entities.ReaderUser", b =>
-                {
-                    b.Navigation("BorrowHistory");
-
-                    b.Navigation("Fines");
+                    b.Navigation("ApproveRequests");
                 });
 #pragma warning restore 612, 618
         }

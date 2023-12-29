@@ -13,8 +13,10 @@ namespace LibraryMS.Repository.Data.Configurations
 	{
 		public void Configure(EntityTypeBuilder<BookCategory> builder)
 		{
-			builder.Property(c => c.Name).IsRequired();
-			builder.Property(c => c.Description).IsRequired();
+			#region Rules
+			builder.Property(cat => cat.Name).IsRequired().HasMaxLength(50);
+			builder.Property(cat => cat.Description).IsRequired().HasMaxLength(120);
+			#endregion
 		}
 	}
 }

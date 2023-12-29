@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace LibraryMS.Repository.Data.Configurations
 {
-	public class ReaderUserConfiguration : IEntityTypeConfiguration<ReaderUser>
+	public class ReaderUserConfiguration : IEntityTypeConfiguration<ApplicationUser>
 	{
-		public void Configure(EntityTypeBuilder<ReaderUser> builder)
+		public void Configure(EntityTypeBuilder<ApplicationUser> builder)
 		{
 
 		}

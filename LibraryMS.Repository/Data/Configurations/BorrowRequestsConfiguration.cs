@@ -13,7 +13,14 @@ namespace LibraryMS.Repository.Data.Configurations
 	{
 		public void Configure(EntityTypeBuilder<BorrowRequest> builder)
 		{
-			builder.Property(r => r.Status).IsRequired().HasDefaultValue(false);
+			#region Rules
+			builder.Property(req => req.Status).IsRequired().HasDefaultValue(false);
+			builder.Property(req => req.AmountOfDays).IsRequired().HasDefaultValue(3);
+			#endregion
+
+			#region Relations
+			//builder.HasOne(req => req.Reader).WithMany().HasForeignKey(req => req.ReaderId);
+			#endregion
 		}
 	}
 }

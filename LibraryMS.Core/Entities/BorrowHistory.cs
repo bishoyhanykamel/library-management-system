@@ -9,11 +9,13 @@ namespace LibraryMS.Core.Entities
 	public class BorrowHistory : BaseEntity
 	{
         public DateTime Date { get; set; }
+        public bool Returned { get; set; }
+        public byte DaysLeft { get; set; }
+
         public string ReaderId { get; set; }
-        public ReaderUser Reader { get; set; }
+        public ApplicationUser Reader { get; set; }
         public int BookId { get; set; }
         public Book Book { get; set; }
-        public int FineId { get; set; }
-        public UserFine UserFine { get; set; }
+        public UserFine Fine { get; set; }
     }
 }
