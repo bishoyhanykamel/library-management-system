@@ -1,0 +1,14 @@
+﻿.AuthboxContainer {
+    min-height: 75vh;
+}
+
+.togglePasswordIconBtn {
+    color: var(--text-primary-white-color);
+    left: calc(100% - 24px);
+    z-index: 5;
+    background-color: var(--body-bg-color);
+}
+
+.togglePasswordIconBtn:hover {
+        cursor: pointer;
+    }

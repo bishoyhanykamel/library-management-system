@@ -1,3 +1,4 @@
+using LibraryMS.Application.Helpers;
 using LibraryMS.Core.Entities;
 using LibraryMS.Core.Interfaces.Repositories;
 using LibraryMS.Repository.Data.DbContexts;
@@ -22,6 +23,8 @@ namespace LibraryMS.Application
 			{
 				options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 			});
+
+			services.AddAutoMapper(typeof(MappingProfiles));
 
 			// Adding Identity to Project
 			services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -76,7 +79,7 @@ namespace LibraryMS.Application
 
 			app.MapControllerRoute(
 				name: "default",
-				pattern: "{controller=Home}/{action=Index}/{id?}");
+				pattern: "{controller=Auth}/{action=Login}/{id?}");
 			#endregion
 
 			app.Run();

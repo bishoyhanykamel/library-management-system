@@ -1,0 +1,28 @@
+﻿@model AuthViewModel
+@{
+	ViewData["Title"] = "Login";
+	Layout = "~/Views/Auth/Shared/AuthFormContainerSharedView.cshtml";
+	ViewData["AuthHeader"] = "Account Login";
+}
+
+<div class="mb-3">
+	<input  class="form-control form-control py-2 bg-transparent"
+		    placeholder="email@example.com" asp-for="Email">
+</div>
+<div class="mb-4 position-relative">
+	<input class="form-control form-control py-2 bg-transparent passwordInput"
+		   placeholder="Password" asp-for="Password">
+	<i class="bi bi-eye-slash position-absolute top-50 translate-middle-y togglePasswordIconBtn"></i>
+</div>
+<div class="mb-4">
+	<input type="button" asp-action="Login" class="form-control btn btn-outline-blue-primary text-capitalize"
+		   value="LOGIN">
+</div>
+<div class="pt-2">
+	<a asp-action="Register" class="text-decoration-none text-white">
+		Don't have an account?
+		<span class="link-offset-2 text-decoration-underline">Sign up now!</span>
+	</a>
+</div>
+
+
