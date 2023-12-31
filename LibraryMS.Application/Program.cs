@@ -2,6 +2,7 @@ using LibraryMS.Application.Helpers;
 using LibraryMS.Core.Entities;
 using LibraryMS.Core.Interfaces.Repositories;
 using LibraryMS.Repository.Data.DbContexts;
+using LibraryMS.Repository.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -25,6 +26,7 @@ namespace LibraryMS.Application
 			});
 
 			services.AddAutoMapper(typeof(MappingProfiles));
+			services.AddScoped<IBookCategoryRepository, BookCategoryRepository>();
 
 			// Adding Identity to Project
 			services.AddIdentity<ApplicationUser, IdentityRole>()

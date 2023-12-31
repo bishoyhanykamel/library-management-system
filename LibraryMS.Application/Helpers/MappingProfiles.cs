@@ -11,6 +11,8 @@ namespace LibraryMS.Application.Helpers
 			CreateMap<AuthViewModel, ApplicationUser>().ReverseMap()
 				.ForMember(vm => vm.Username, o => o.MapFrom(usr => usr.UserName))
 				.ForMember(vm => vm.Name, o => o.MapFrom(usr => usr.Name));
+
+			CreateMap<BookCategoryViewModel, BookCategory>().ReverseMap();
 		}
 	}
 }

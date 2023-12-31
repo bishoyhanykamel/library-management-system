@@ -8,19 +8,19 @@
 
 <div class="mb-3">
 	<input class="form-control form-control py-2 bg-transparent"
-		   placeholder="Your Name" asp-for="Name">
+		   placeholder="@Html.DisplayNameFor(m => m.Name)" asp-for="Name">
 </div>
 <div class="mb-3">
 	<input class="form-control form-control py-2 bg-transparent"
-		   placeholder="Your username" asp-for="Username">
+		   placeholder="@Html.DisplayNameFor(m => m.Username)" asp-for="Username">
 </div>
 <div class="mb-3">
 	<input class="form-control form-control py-2 bg-transparent"
-		   placeholder="email@example.com" asp-for="Email">
+		   placeholder="@Html.DisplayNameFor(m => m.Email)" asp-for="Email">
 </div>
 <div class="mb-4 position-relative">
 	<input class="form-control form-control py-2 bg-transparent passwordInput"
-		   placeholder="Password" asp-for="Password">
+		   placeholder="@Html.DisplayNameFor(m => m.Password)" asp-for="Password">
 	<i class="bi bi-eye-slash position-absolute top-50 translate-middle-y togglePasswordIconBtn"></i>
 </div>
 <div class="mb-4">

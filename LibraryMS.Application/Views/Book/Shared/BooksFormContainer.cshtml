@@ -1,0 +1,17 @@
+﻿
+@{
+	ViewData["Title"] = "BooksFormContainer";
+	Layout = "~/Views/Shared/_LayoutWithNavbar.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/form_container.css">
+
+<div class="row d-flex justify-content-center align-items-center" id="boxContainer">
+	<div class="col-md-8 p-5">
+		<form class="shadow border-2 rounded-3 p-5" method="post">
+			<div asp-validation-summary="All"></div>
+			@RenderBody()
+		</form>
+	</div>
+</div>
+

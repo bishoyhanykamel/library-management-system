@@ -19,8 +19,4 @@
     <ProjectReference Include="..\LibraryMS.Repository\LibraryMS.Repository.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Home\" />
-  </ItemGroup>
-
 </Project>
