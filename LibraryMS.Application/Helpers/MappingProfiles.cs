@@ -8,11 +8,20 @@ namespace LibraryMS.Application.Helpers
 	{
 		public MappingProfiles()
 		{
+			#region Authorization ViewModel
 			CreateMap<AuthViewModel, ApplicationUser>().ReverseMap()
-				.ForMember(vm => vm.Username, o => o.MapFrom(usr => usr.UserName))
-				.ForMember(vm => vm.Name, o => o.MapFrom(usr => usr.Name));
+		.ForMember(vm => vm.Username, o => o.MapFrom(usr => usr.UserName))
+		.ForMember(vm => vm.Name, o => o.MapFrom(usr => usr.Name));
+			#endregion
 
+			#region BookCategory ViewModel
 			CreateMap<BookCategoryViewModel, BookCategory>().ReverseMap();
+			#endregion
+
+			#region Book ViewModel
+			CreateMap<BookViewModel, Book>().ReverseMap()
+				.ForMember(b => b.Category, o => o.MapFrom(b => b.Category.Name));
+			#endregion
 		}
 	}
 }
