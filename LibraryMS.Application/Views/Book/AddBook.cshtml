@@ -3,8 +3,7 @@
 	ViewData["Title"] = "Add Book";
 	Layout = "~/Views/Book/Shared/BooksFormContainer.cshtml";
 	ViewData["Action"] = "AddBook";
-
-	var BookCategories = new SelectList(ViewBag.BookCategories, "Id", "Name");
+	var categories = new SelectList(ViewBag.BookCategories, "Id", "Name");
 }
 
 <div class="mb-3">
@@ -25,8 +24,8 @@
 </div>
 
 <div class="mb-3">
-	<select class="form-control py-2 bg-transparent" asp-for="CategoryId" asp-items="@BookCategories">
-		<option disabled selected>--- Choose Category ---</option>
+	<select class="form-control py-2 bg-transparent" asp-for="CategoryId" asp-items="@categories">
+		<option disabled selected value="-1">--- Choose Category ---</option>
 	</select>
 </div>
 

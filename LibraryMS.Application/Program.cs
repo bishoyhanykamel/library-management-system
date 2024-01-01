@@ -27,6 +27,7 @@ namespace LibraryMS.Application
 
 			services.AddAutoMapper(typeof(MappingProfiles));
 			services.AddScoped<IBookCategoryRepository, BookCategoryRepository>();
+			services.AddScoped<IBookRepository, BookRepository>();
 
 			// Adding Identity to Project
 			services.AddIdentity<ApplicationUser, IdentityRole>()

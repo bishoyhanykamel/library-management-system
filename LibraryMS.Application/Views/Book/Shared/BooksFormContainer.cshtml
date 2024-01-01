@@ -1,6 +1,5 @@
 ﻿
 @{
-	ViewData["Title"] = "BooksFormContainer";
 	Layout = "~/Views/Shared/_LayoutWithNavbar.cshtml";
 }
 
@@ -9,7 +8,7 @@
 <div class="row d-flex justify-content-center align-items-center" id="boxContainer">
 	<div class="col-md-8 p-5">
 		<form class="shadow border-2 rounded-3 p-5" method="post">
-			<div asp-validation-summary="All"></div>
+			<div asp-validation-summary="All" class="text-white"></div>
 			@RenderBody()
 		</form>
 	</div>

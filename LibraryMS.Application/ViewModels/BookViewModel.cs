@@ -1,5 +1,7 @@
 ﻿using LibraryMS.Core.Entities;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 
 namespace LibraryMS.Application.ViewModels
 {
@@ -15,11 +17,8 @@ namespace LibraryMS.Application.ViewModels
 		[Required(ErrorMessage = "Book description is required")]
 		[MaxLength(100, ErrorMessage = "Book description can't be more than 100 characters")]
 		public string Description { get; set; }
+		[Required(ErrorMessage = "Book must be assigned to a category")]
 		public int CategoryId { get; set; }
-		[Required(ErrorMessage = "Book must have a category")]
-		public string Category { get; set; }
-		//public ICollection<BorrowRequest> BorrowRequest { get; set; }
-		//public ICollection<BorrowHistory> BorrowHistory { get; set; }
-		//public ICollection<ApplicationUser> ReaderUser { get; set; }
+		public string? Category { get; set; }
 	}
 }
