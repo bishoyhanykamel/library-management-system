@@ -14,4 +14,8 @@
     <ProjectReference Include="..\LibraryMS.Core\LibraryMS.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\Specifications\" />
+  </ItemGroup>
+
 </Project>

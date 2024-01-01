@@ -20,7 +20,8 @@ namespace LibraryMS.Application.Controllers
 			autoMapper = _autoMapper;
 		}
 
-		public async Task<IActionResult> AddCategory()
+        #region Book Category Operations
+        public async Task<IActionResult> AddCategory()
         {
             return View();
         }
@@ -43,7 +44,14 @@ namespace LibraryMS.Application.Controllers
             }
             return View();
         }
+        #endregion
 
+        #region Book Operations
+        public async Task<IActionResult> AddBook()
+        {
+            return View();
+        }
+        #endregion
 
     }
 }
