@@ -1,7 +1,9 @@
 ﻿@model BookCategoryViewModel
 @{
-	ViewData["Title"] = "AddCategory";
+	ViewData["Title"] = "Add Book Category";
 	Layout = "~/Views/Book/Shared/BooksFormContainer.cshtml";
+
+	ViewData["Action"] = "AddCategory";
 }
 
 <div class="mb-3">
@@ -17,8 +19,4 @@
 			  placeholder="@Html.DisplayNameFor(m => m.Description)" asp-for="Description"></textarea>
 </div>
 
-<div class="mb-4">
-	<input type="submit" asp-action="AddCategory" class="btn btn-outline-success text-capitalize"
-		   value="Save"> <span class="text-white"> | </span>
-	<a asp-action="Index" asp-asp-controller="Home" class="btn btn-outline-blue-primary">Cancel</a>
-</div>
+<partial name="~/Views/Book/Shared/FormsButtonsPartialView.cshtml" view-data="ViewData" />

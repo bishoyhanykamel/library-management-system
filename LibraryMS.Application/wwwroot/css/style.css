@@ -42,3 +42,7 @@ h6 {
 .btn-outline-blue-primary:focus {
     background-color: var(--title-primary-blue-color);
 }
+
+select option:not(:first-child) {
+    color: black;
+}

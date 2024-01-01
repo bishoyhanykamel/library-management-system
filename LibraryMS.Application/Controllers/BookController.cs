@@ -12,13 +12,15 @@ namespace LibraryMS.Application.Controllers
 		private readonly IBookCategoryRepository categoryRepo;
 		private readonly IMapper autoMapper;
 
-		public BookController(
-            IBookCategoryRepository _categoryRepo,
-            IMapper _autoMapper)
+        #region Constructor
+        public BookController(
+    IBookCategoryRepository _categoryRepo,
+    IMapper _autoMapper)
         {
-			categoryRepo = _categoryRepo;
-			autoMapper = _autoMapper;
-		}
+            categoryRepo = _categoryRepo;
+            autoMapper = _autoMapper;
+        } 
+        #endregion
 
         #region Book Category Operations
         public async Task<IActionResult> AddCategory()
@@ -47,9 +49,19 @@ namespace LibraryMS.Application.Controllers
         #endregion
 
         #region Book Operations
-        public async Task<IActionResult> AddBook()
+        public async Task<IActionResult> Index()
         {
             return View();
+        }
+        public async Task<IActionResult> AddBook()
+        {
+            var categories = await categoryRepo.GetAllAsync();
+            if (categories != null)
+            {
+                ViewBag.BookCategories = categories;
+                return View();
+            }
+            return View(nameof(Index));
         }
         #endregion
 
